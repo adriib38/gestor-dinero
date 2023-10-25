@@ -1,0 +1,131 @@
+.encabezado-registro {
+    display: flex;
+    justify-content: space-between;
+}
+
+.titulo-registro {
+    display: flex;
+    align-items: center;
+}
+
+.section-registros  {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.section-registros .registro {
+    background: #8cc9d5;
+    padding: 20px;
+}
+
+.registro .fecha {
+    font-family: 'Open Sans';
+    text-transform: uppercase;
+}
+
+.registro .cantidad {
+    font-family: 'Open Sans';
+    margin-top: 10px;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.registro .categoria {
+    text-decoration: none;
+    display: inline-flex;
+    background: #8f12c1e0;
+    color: white;
+    font-family: 'Open sans';
+    font-size: small;
+    margin-bottom: 5px;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.registro-gasto {
+    border-radius: 100px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 20px;
+
+    color: white;
+    background: #c1121f;
+}
+
+.registro-ingreso {
+    border-radius: 100px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 20px;
+    color: white;
+    background: #2a9d8f;
+}
+
+.tipo {
+    border-radius: 4px;
+    padding: 4px;
+    color: white;
+    display: inline;
+}
+.tipo-ingreso { background: #09921096; }
+.tipo-gasto { background: #92091296; }
+
+.eliminar {
+    background: #92091296;
+    font-size: .6em;
+}
+
+.editar {
+    display: block;
+    margin-top: 10px;
+    background: #09609293;
+    font-size: 2em;
+}
+
+.editar_activado {
+    background: #099264;
+    scale: .5;
+}
+
+.editar_desactivado {
+
+}
+
+table {
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px 40px;
+}
+
+tr {
+    background: #addef8;
+}
+
+tr:nth-child(odd) {
+    background: #87d0f7;
+}
+
+th {
+    padding: 10px;
+    border: 2px solid #312996;
+    background: rgb(49,41,150);
+    background: linear-gradient(0deg, rgba(49,41,150,1) 0%, rgba(37,28,149,1) 100%);
+    color: white;
+}
+
+table .categoria {
+    text-decoration: none;
+    display: inline-flex;
+    background: #8f12c1e0;
+    color: white;
+    font-family: 'Open sans';
+    font-size: small;
+    margin-bottom: 5px;
+    padding: 2px 4px;
+    border-radius: 3px;
+}

@@ -1,0 +1,46 @@
+<h1>Nuevo registro</h1>
+
+<div id="form-nuevo-registro">
+    <div>
+      <label for="registro-concepto">Concepto</label>
+      <input type="text" id="registro-concepto" name="concepto" [(ngModel)]="concepto" required />
+    </div>
+  
+    <div>
+      <label for="registro-observaciones">Observaciones</label>
+      <textarea id="registro-observaciones" rows="4" cols="50" name="observaciones" [(ngModel)]="observaciones" required></textarea>
+    </div>
+
+
+    <datalist id="datalist-categorias">
+      <option value="Nomina"></option>
+      <option value="Deporte"></option>
+      <option value="Restaurante"></option>
+      <option value="Supermercado"></option>
+      <option value="Estudios"></option>
+      <option value="Seguros"></option>
+      <option value="Hogar"></option>
+      <option value="Otro"></option>
+    </datalist>
+
+    <div>
+      <label for="registro-categoria">Categoria</label>
+      <input list="datalist-categorias" id="registro-categoria" name="categoria" [(ngModel)]="categoria" required />
+    </div>
+  
+    <label for="registro-cantidad">Cantidad (€)</label>
+    <input type="number" id="registro-cantidad" name="cantidad" min="0" max="1000042" [(ngModel)]="cantidad" required/>
+  
+    <fieldset>
+      <legend>Tipo</legend>
+     
+        <input type="radio" id="rb-gasto" name="tipo" value="gasto" [(ngModel)]="tipo" /> 
+        <label for="rb-gasto">Gasto</label>
+   
+        <input type="radio" id="rb-ingreso" name="tipo" value="ingreso" [(ngModel)]="tipo" /> 
+        <label for="rb-ingreso">Ingreso</label>
+ 
+    </fieldset>
+  
+    <button id="form-crear" type="submit" (click)="btnCrear()">Crear</button>
+</div>

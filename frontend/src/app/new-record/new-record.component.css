@@ -1,0 +1,29 @@
+h1 {
+    margin-bottom: 15px;
+}
+
+#form-nuevo-registro {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 400px;
+    background: #b1dce5;
+    padding: 30px 20px;
+    border-radius: 4px;
+    transition: all .2s;
+}
+
+#form-nuevo-registro:hover {
+    border-radius: 10px;
+}
+
+#form-nuevo-registro div {
+    display: flex;
+    flex-direction: column;
+}
+
+#form-crear {
+    margin-top: 20px;
+    height: 40px;
+}
+

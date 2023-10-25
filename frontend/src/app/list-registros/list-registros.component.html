@@ -1,0 +1,64 @@
+<h1>Registros obtenidos: {{ listaRegistros.length }}</h1>
+
+<button (click)="btnCSV()">CSV</button>
+
+<button (click)="cambiarVista()">Cambiar Vista</button>
+
+<button class="editar" [ngClass]="modoEditar == true ? 'editar_activado' : 'editar_desactivado'" (click)="cambiarModoEditar()">✏️</button>
+
+<section *ngIf="tipoVista == 1" class="section-registros">
+    <article class="registro" *ngFor="let registro of listaRegistros">
+        <div class="encabezado-registro">
+            <p class="fecha">{{ registro.created_at | date }}</p>
+            <button class="eliminar" (click)="eliminarRegistro(registro.id)">X</button>
+        </div>
+
+        <div class="titulo-registro">
+            <h3>{{ registro.concepto }} </h3>
+            <div class="registro-{{ registro.tipo }}">€</div>
+        </div>
+        <a class="categoria" href="/hastag/{{ registro.categoria }}" *ngIf="registro.categoria">{{ registro.categoria }}</a>
+        <p>{{ registro.observaciones }}</p>
+        <p class="cantidad">
+            {{ registro.cantidad }}€
+        </p>
+    </article>
+</section>
+
+<table *ngIf="tipoVista == 2">
+    <tr>
+        <th>Concepto</th>
+        <th>Categoria</th>
+        <th>Tipo</th>
+        <th>Cantidad</th>
+        <th>Observaciones</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+    </tr>
+    <tr *ngFor="let registro of listaRegistros" id="{{ registro.id }}">
+        <td class="td-concepto">
+            <p class="campo-registro" [contentEditable]="modoEditar"><strong>{{ registro.concepto }} </strong></p>
+        </td>
+        <td class="td-categoria">
+            <a class="campo-registro" [contentEditable]="modoEditar" class="categoria" href="/hastag/{{ registro.categoria }}" *ngIf="registro.categoria">{{ registro.categoria }}</a>
+        </td>
+        <td class="td-tipo">
+            <p class="tipo campo.registro" [ngClass]="{'tipo-gasto': registro.tipo === 'gasto', 'tipo-ingreso' : registro.tipo === 'ingreso' }"
+              [contentEditable]="modoEditar">
+              {{ registro.tipo }}
+            </p>
+        </td>          
+        <td class="td-cantidad">
+            <p class="campo-registro" [contentEditable]="modoEditar">{{ registro.cantidad }} </p>€
+        </td>
+        <td class="td-observaciones">
+            <p class="campo-registro" [contentEditable]="modoEditar">{{ registro.observaciones }} </p>
+        </td>
+        <td class="td-fecha">
+            <p class="campo-registro" [contentEditable]="modoEditar">{{ registro.created_at | date }}</p>
+        </td>
+        <td class="td-acciones">
+            <button class="eliminar" (click)="eliminarRegistro(registro.id)">❌</button>
+        </td>
+    </tr>
+</table>

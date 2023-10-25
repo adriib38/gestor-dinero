@@ -1,0 +1,18 @@
+nav { 
+    background: #EDE7E3;
+    margin: none;
+    padding: 20px 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #16697A;
+    font-weight: 500;
+}

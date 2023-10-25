@@ -1,0 +1,22 @@
+#enlaces {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+article {
+    background: #f0981e;
+    padding: 50px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    transition: all .2s;
+}
+article:hover {
+    border-radius: 10px;
+}
+
+a {  
+    color: inherit;
+    text-decoration: none;
+}

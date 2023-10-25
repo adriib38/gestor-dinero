@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #82C0CC;
+    font-family: Raleway;
+}
+
+textarea,
+input[type="text"],
+input[type="number"],
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    font-family: 'Open Sans';
+    border: none;
+    background: #2c3bc4;
+    padding: 5px;
+    border-radius: 5px;
+    color: rgb(254, 254, 254);
+    cursor: pointer;
+    transition: all .2s;
+}
+button:hover {
+    border-radius: 10px;
+}
+
