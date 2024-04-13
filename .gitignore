@@ -1,2 +1,30 @@
-node_modules
-.env
+# Ignorar archivos y directorios generados por el CLI de Angular
+node_modules/
+dist/
+*.class
+*.log
+
+# Ignorar archivos de configuración de Angular
+*.stackdump
+*.sw??
+*.d.ts
+
+# Ignorar archivos de respaldo y caché
+*.bak
+*.cache
+
+# Ignorar archivos de configuración de IDE y editor
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+*.idea/
+
+# Ignorar archivos de dependencias específicos del sistema operativo (solo si estás desarrollando en un entorno específico)
+.DS_Store
+Thumbs.db
+
+frontend\.angular\cache\16.2.3
+
+*.vscode

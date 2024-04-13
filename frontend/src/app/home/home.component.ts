@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { createChart } from 'lightweight-charts';
 
 @Component({
   selector: 'app-home',
@@ -8,3 +9,6 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 
 }
+
+
+
