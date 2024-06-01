@@ -1,5 +1,10 @@
 const registrosService = require('../services/registrosService');
 
+const getStats = async (req, res) => {
+  const stats = await registrosService.getStats();
+  res.send({ status: 'OK', data: stats})
+}
+
 const getAllRegistros = async (req, res) => {
   const allRegistros = await registrosService.getAllRegistros();
 
@@ -96,6 +101,7 @@ const deleteRegistro = async (req, res) => {
 
 
 module.exports = {
+  getStats,
   getRegistroById,
   getRegistroByCategory,
   getAllRegistros,

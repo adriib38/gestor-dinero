@@ -6,6 +6,7 @@ const router = express.Router();
 //Registros endpoints
 router
     .get("/", registrosController.getAllRegistros)
+    .get("/stats", registrosController.getStats)
     .get("/:id", registrosController.getRegistroById)
     .get("/c/:categoria", registrosController.getRegistroByCategory)
     .post("/", registrosController.createRegistro)
