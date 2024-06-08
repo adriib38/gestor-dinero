@@ -7,5 +7,6 @@ console.log('STATS.js')
 
 router
     .get("/resume", statsRegistrosController.getStats)
+    .get("/cantidadCategoriasGastos", statsRegistrosController.getCantidadCategoriasGastos)
 
 module.exports = router;

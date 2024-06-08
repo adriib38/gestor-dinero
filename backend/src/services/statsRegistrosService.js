@@ -32,6 +32,24 @@ const getStats = (req, res) => {
   });
 };
 
+const getCantidadCategoriasGastos = (req, res) => {
+  const query = `
+  SELECT id, SUM(cantidad) as 'value', categoria as 'label' FROM registros WHERE tipo='gasto' GROUP by categoria;`;
+
+  return new Promise((resolve, reject) => {
+    pool.query(query, (err, results) => {
+      if (err) {
+        console.error("Error al obtener stats:", err);
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+};
+
+
 module.exports = {
-  getStats
+  getStats,
+  getCantidadCategoriasGastos
 };
