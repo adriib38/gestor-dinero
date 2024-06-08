@@ -1,33 +1,42 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
 const path = require("path");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const logger = require("morgan");
 
+const app = express();
 
-//Configura CORS
+// Configura CORS
 app.use(cors());
 
-//Configura body-parser para manejar solicitudes JSON
-app.use(bodyParser.json());
+// Configura body-parser para manejar solicitudes JSON
+app.use(express.json());
 
-//Configura la ruta para servir archivos estáticos
+// Configura la ruta para servir archivos estáticos
 app.use(express.static(path.join(__dirname, "app")));
 
-//Print request in console
+// Print request in console
 app.use(logger("tiny"));
 
-app.use("/api/v1", require("./v1/routes/registros.js"));
+// Importar y usar las rutas
+app.use("/api/v1", require("./v1/routes/registros"));
+app.use("/api/v1/stats", require("./v1/routes/stats"));
 
-//Error handler
+// Error handler para rutas no encontradas
 app.use((req, res, next) => {
   res.status(404).json({
     error: "Endpoint not Found",
     endpoint: req.originalUrl,
   });
-  next();
+});
+
+// Manejo global de errores (opcional)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    error: "Internal Server Error",
+    message: err.message,
+  });
 });
 
 module.exports = app;

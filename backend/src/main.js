@@ -12,7 +12,6 @@ async function init() {
     } catch (error) {
         console.error('Error starting server: ', error);
     }
-
 }
 
 init();

@@ -10,29 +10,6 @@ var pool = mysql.createPool({
   database: process.env.DB_DATABASE
 });
 
-const getStats = (req, res) => {
-  const query = `
-    SELECT
-    SUM(CASE WHEN tipo = 'gasto' THEN 1 ELSE 0 END) AS n_gastos,
-    SUM(CASE WHEN tipo = 'ingreso' THEN 1 ELSE 0 END) AS n_ingresos,
-    SUM(CASE WHEN tipo = 'gasto' THEN cantidad ELSE 0 END) AS suma_gastos,
-    SUM(CASE WHEN tipo = 'ingreso' THEN cantidad ELSE 0 END) AS suma_ingresos,
-    (SELECT categoria FROM registros WHERE tipo = 'gasto' GROUP BY categoria ORDER BY COUNT(*) DESC LIMIT 1) AS 'moda_categoria_gasto',
-    (SELECT categoria FROM registros WHERE tipo = 'ingreso' GROUP BY categoria ORDER BY COUNT(*) DESC LIMIT 1) AS 'moda_categoria_ingreso'
-  FROM registros;`
-
-  return new Promise((resolve, reject) => {
-    pool.query(query, (err, results) => {
-      if (err) {
-        console.error("Error al obtener stats:", err);
-        reject(err);
-      } else {
-        resolve(results[0]);
-      }
-    });
-  });
-};
-
 const getRegistroById = (req, res) => {
   const query = `SELECT * FROM registros WHERE id = "${req.params.id}"`;
 
@@ -175,7 +152,6 @@ const deleteRegistro = (req, res) => {
 };
 
 module.exports = {
-  getStats,
   getAllRegistros,
   getRegistroById,
   getRegistroByCategory,
