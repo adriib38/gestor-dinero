@@ -1,30 +1,42 @@
 const registrosService = require('../services/registrosService');
 
 const getAllRegistros = async (req, res) => {
-  const allRegistros = await registrosService.getAllRegistros();
-
-  res.send({ status: 'OK', data: allRegistros});
+  try {
+    const allRegistros = await registrosService.getAllRegistros();
+    res.send({ status: 'OK', data: allRegistros});
+  } catch(e){
+    console.error("Error al obtener registros:", error);
+    res.status(500).send({ status: 'ERROR', message: 'Error al obtener registros' });
+  }
 }
 
 const getRegistroById = async (req, res) => {
-  const registroById = await registrosService.getRegistroById(req);
-
-  res.send({ status: 'OK', data: registroById});
+  try{
+    const registroById = await registrosService.getRegistroById(req);
+    res.send({ status: 'OK', data: registroById});
+  } catch(e){
+    console.error("Error al obtener registro:", error);
+    res.status(500).send({ status: 'ERROR', message: 'Error al obtener registro' });
+  }
 }
 
 const getRegistroByCategory = async (req, res) => {
-  const getRegistroByCategory = await registrosService.getRegistroByCategory(req);
-
-  res.send({ status: 'OK', data: getRegistroByCategory});
+  try{
+    const getRegistroByCategory = await registrosService.getRegistroByCategory(req);
+    res.send({ status: 'OK', data: getRegistroByCategory});
+  } catch(e){
+    console.error("Error al obtener registros:", error);
+    res.status(500).send({ status: 'ERROR', message: 'Error al obtener registros' });
+  }
 }
 
 
 const updateRegistro = async (req, res) => {
   const { body } = req;
-
+  console.log(req.body)
   // Verifica si hay al menos un campo presente
   if (!body.concepto && !body.observaciones && !body.categoria && !body.tipo && !body.cantidad) {
-    res.status(400).send({ status: 'error', data: "No fields provided for update"});
+    res.status(400).send({ status: 'ERROR', data: "No fields provided for update"});
     return;
   }
 
@@ -56,7 +68,7 @@ const updateRegistro = async (req, res) => {
     const updateRegistro = await registrosService.updateRegistro(req.params.id, newRegistro);
     res.status(200).send({ status: 'OK', data: updateRegistro });
   } catch (error) {
-    console.error("Error updating registro:", error);
+    console.error("Error al actualizar registro:", error);
     res.status(500).send({ status: 'error', data: "Internal Server Error" });
   }
 }
