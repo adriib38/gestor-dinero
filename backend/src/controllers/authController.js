@@ -7,13 +7,18 @@ require("dotenv").config();
 const signup = async (req, res) => {
   let { username, password } = req.body;
 
+  if(!username | !password){
+    return res.status(400).json({
+      message: "Username and password required.",
+    });
+  }
+
   //Format the data
   username = username.toLowerCase().trim().replace(/\s+/g, "");
   password = password.trim();
   const user = new User({ username, password });
 
   const { valid, errors } = validateUserFields(user);
-
   if (!valid) {
     return res.status(400).json({
       message: errors,
@@ -52,6 +57,19 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   const { username, password } = req.body;
+
+  if(!username | !password){
+    return res.status(400).json({
+      message: "Username and password required.",
+    });
+  }
+
+  const { valid, errors } = validateUserFields({username, password});
+  if (!valid) {
+    return res.status(400).json({
+      message: errors,
+    });
+  }
 
   User.getUserByUsername(username, async (err, results) => {
     if (err) {
