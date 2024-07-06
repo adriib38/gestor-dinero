@@ -5,6 +5,7 @@ const router = express.Router();
 //Registros endpoints
 router
   .post("/signup", authController.signup)
+  .post("/signin", authController.signin)
 
 
 

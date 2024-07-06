@@ -16,7 +16,6 @@ const signup = async (req, res) => {
 
   if (!valid) {
     return res.status(400).json({
-      created: false,
       message: errors,
     });
   }
@@ -31,7 +30,6 @@ const signup = async (req, res) => {
       });
 
       return res.status(201).json({
-        created: true,
         message: "User created",
         user: user,
         token: token,
@@ -41,7 +39,7 @@ const signup = async (req, res) => {
       if (err.code === "ER_DUP_ENTRY") {
         return res
           .status(409)
-          .json({ created: false, message: err.sqlMessage });
+          .json({ message: err.sqlMessage });
       }
 
       // Send the error if there was one while creating the user
@@ -52,6 +50,43 @@ const signup = async (req, res) => {
   });
 };
 
+const signin = async (req, res) => {
+  const { username, password } = req.body;
+
+  User.getUserByUsername(username, async (err, results) => {
+    if (err) {
+      // Send the error if there was one
+      return res
+        .status(500)
+        .json({ message: "Error getting user", error: err });
+    }
+
+    if(results == undefined){
+      return res
+        .status(404)
+        .json({ message: "User not found" });
+    }
+
+    const correctPassword = await User.validatePassword(
+      password,
+      results.password
+    );
+
+    // If the password is valid
+    if (correctPassword) {
+      // Create a token inside the callback
+      let token = jwt.sign({ id: results.uuid }, process.env.JWT_SECRET, {
+        expiresIn: "1h"
+      });
+
+      res.status(201).json({ user: results, token: token });
+    } else {
+      res.status(401).json({ message: "Invalid password" });
+    }
+  });
+};
+
 module.exports = {
   signup,
+  signin
 };
