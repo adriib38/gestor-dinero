@@ -6,10 +6,11 @@ const verifyToken = require("../../controllers/middlewares/verifyJWT.js");
 
 router
   .get("/", verifyToken, registrosController.getAllRegistros)
+  .get("/mis-registros", verifyToken, registrosController.getRegistrosFromUser) //Second because it takes priority over /:id
   .get("/:id", registrosController.getRegistroById)
   .get("/c/:categoria", registrosController.getRegistroByCategory)
-  .post("/", registrosController.createRegistro)
+  .post("/", verifyToken, registrosController.createRegistro)
   .put("/:id", registrosController.updateRegistro)
-  .delete("/:id", registrosController.deleteRegistro);
+  .delete("/:id", registrosController.deleteRegistro)
 
 module.exports = router;

@@ -65,12 +65,12 @@ class Registro {
     });
   }
 
-  static createRegistro(newRegistro, callback) {
+  static createRegistro(newRegistro, userUuid, callback) {
     const nuevoId = uuid();
 
     const { concepto, observaciones, categoria, tipo, cantidad } = newRegistro;
     const query =
-      "INSERT INTO registros (id, concepto, observaciones, categoria, tipo, cantidad) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO registros (id, concepto, observaciones, categoria, tipo, cantidad, user) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     const params = [
       nuevoId,
@@ -79,6 +79,7 @@ class Registro {
       categoria,
       tipo,
       cantidad,
+      userUuid
     ];
 
     db.query(query, params, (err, results) => {
@@ -93,6 +94,7 @@ class Registro {
           categoria,
           tipo,
           cantidad,
+          userUuid
         };
         callback(null, nuevoRegistro);
       }
@@ -104,6 +106,17 @@ class Registro {
     db.query(query, id, (err, results) => {
       if (err) {
         console.error("Error al eliminar el registro:", err);
+        callback(err, null);
+      } else {
+        callback(null, results);
+      }
+    });
+  }
+
+  static getRegistrosFromUser(userUuid, callback) {
+    const query = `SELECT id, concepto, observaciones, tipo, cantidad, categoria, created_at FROM registros WHERE user = ?`;
+    db.query(query, userUuid, (err, results) => {
+      if(err) {
         callback(err, null);
       } else {
         callback(null, results);

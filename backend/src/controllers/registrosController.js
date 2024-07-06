@@ -107,7 +107,7 @@ const createRegistro = (req, res) => {
     cantidad: body.cantidad,
   };
 
-  Registro.createRegistro(newRegistro, (err, results) => {
+  Registro.createRegistro(newRegistro, req.userUuid, (err, results) => {
     if (err) {
       return res
         .status(500)
@@ -121,7 +121,6 @@ const createRegistro = (req, res) => {
 };
 
 const deleteRegistro = (req, res) => {
-  console.log(req.params.id);
   Registro.deleteRegistro(req.params.id, (err, results) => {
     if (err) {
       return res.status(500).json({ message: "Error deleting registro" });
@@ -135,6 +134,17 @@ const deleteRegistro = (req, res) => {
   });
 };
 
+const getRegistrosFromUser = (req, res) => {
+  Registro.getRegistrosFromUser(req.userUuid, (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Error getting registros" });
+    } else {
+      return res.status(200).json(results);
+    }
+  });
+};
+
+
 module.exports = {
   getRegistroById,
   getRegistroByCategory,
@@ -142,4 +152,5 @@ module.exports = {
   updateRegistro,
   createRegistro,
   deleteRegistro,
+  getRegistrosFromUser
 };

@@ -1,8 +1,11 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+// To-do: get jwt from cookies
+
 // Middleware to verify the token
 function verifyToken(req, res, next) {
+  console.log('verifyToken')
   let auth = req.get("Authorization");
 
   if (!auth) {
@@ -12,7 +15,7 @@ function verifyToken(req, res, next) {
   try {
     token = req.get("Authorization").split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.uuid = decoded.id;
+    req.userUuid = decoded.id;
 
     next();
   } catch (error) {
