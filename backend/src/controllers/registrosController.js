@@ -1,47 +1,45 @@
-const registrosService = require("../services/registrosService");
+const Registro = require("../models/Registro");
 
-const getAllRegistros = async (req, res) => {
-  try {
-    const allRegistros = await registrosService.getAllRegistros();
-    res.send({ status: "OK", data: allRegistros });
-  } catch (e) {
-    console.error("Error al obtener registros:", error);
-    res
-      .status(500)
-      .send({ status: "ERROR", message: "Error al obtener registros" });
-  }
+
+const getAllRegistros = (req, res) => {
+  Registro.getAllRegistros((err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Error getting registros", error: err });
+    } else {
+      return res.status(200).json(results);
+    }
+  });
 };
 
-const getRegistroById = async (req, res) => {
-  try {
-    const registroById = await registrosService.getRegistroById(req);
-    res.send({ status: "OK", data: registroById });
-  } catch (e) {
-    console.error("Error al obtener registro:", error);
-    res
-      .status(500)
-      .send({ status: "ERROR", message: "Error al obtener registro" });
-  }
+const getRegistroById = (req, res) => {
+  Registro.getRegistroById(req.params.id, (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Error getting registro", error: err });
+    } else {
+      return res.status(200).json(results[0]);
+    }
+  });
 };
 
-const getRegistroByCategory = async (req, res) => {
-  try {
-    const getRegistroByCategory = await registrosService.getRegistroByCategory(
-      req
-    );
-    res.send({ status: "OK", data: getRegistroByCategory });
-  } catch (e) {
-    console.error("Error al obtener registros:", error);
-    res
-      .status(500)
-      .send({ status: "ERROR", message: "Error al obtener registros" });
-  }
+const getRegistroByCategory = (req, res) => {
+  Registro.getRegistroByCategory(req.params.categoria, (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Error getting registros", error: err });
+    } else {
+      return res.status(200).json(results);
+    }
+  });
 };
 
-const updateRegistro = async (req, res) => {
+const updateRegistro = (req, res) => {
   const { body } = req;
-  console.log(req.body);
-  // Verifica si hay al menos un campo presente
+
   if (
     !body.concepto &&
     !body.observaciones &&
@@ -49,10 +47,9 @@ const updateRegistro = async (req, res) => {
     !body.tipo &&
     !body.cantidad
   ) {
-    res
+    return res
       .status(400)
       .send({ status: "ERROR", data: "No fields provided for update" });
-    return;
   }
 
   const newRegistro = {};
@@ -77,61 +74,65 @@ const updateRegistro = async (req, res) => {
     newRegistro.cantidad = body.cantidad;
   }
 
-  try {
-    const updateRegistro = await registrosService.updateRegistro(
-      req.params.id,
-      newRegistro
-    );
-    res.status(200).send({ status: "OK", data: updateRegistro });
-  } catch (error) {
-    console.error("Error al actualizar registro:", error);
-    res.status(500).send({ status: "ERROR", data: "Internal Server Error" });
-  }
-};
-
-const createRegistro = async (req, res) => {
-  try {
-    const { body } = req;
-
-    if (
-      !body.concepto ||
-      !body.observaciones ||
-      !body.categoria ||
-      !body.tipo ||
-      !body.cantidad
-    ) {
-      return;
-    }
-
-    const newRegistro = {
-      concepto: body.concepto,
-      observaciones: body.observaciones,
-      categoria: body.categoria,
-      tipo: body.tipo,
-      cantidad: body.cantidad,
-    };
-
-    const createRegistro = await registrosService.createRegistro(newRegistro);
-
-    res.send({ status: "OK", data: createRegistro });
-  } catch (error) {
-    console.error("Error al crear registro:", error);
-    res.status(500).send({ status: "ERROR", data: "Internal Server Error" });
-  }
-};
-
-const deleteRegistro = async (req, res) => {
-  try {
-    const deleteRegistro = await registrosService.deleteRegistro(req);
-    if (deleteRegistro.affectedRows == 1) {
-      res.send({ status: "OK", data: "Registro eliminado" });
+  Registro.updateRegistro(req.params.id, newRegistro, (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Error updating registros", error: err });
     } else {
-      res.status(404).send({ status: "ERROR", data: "Registro no encontrado" });
+      return res
+        .status(200)
+        .json({ message: "Updated succesfull", newRegistro });
     }
-  } catch (error) {
-    console.error("Error al eliminar registro:", error);
-    res.status(500).send({ status: "error", data: "Internal Server Error" });
+  });
+};
+
+const createRegistro = (req, res) => {
+  const { body } = req;
+  if (
+    !body.concepto ||
+    !body.observaciones ||
+    !body.categoria ||
+    !body.tipo ||
+    !body.cantidad
+  ) {
+    return res.status(400).json({ message: "No fields provided for update" });
   }
+
+  const newRegistro = {
+    concepto: body.concepto,
+    observaciones: body.observaciones,
+    categoria: body.categoria,
+    tipo: body.tipo,
+    cantidad: body.cantidad,
+  };
+
+  Registro.createRegistro(newRegistro, (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Error creating registro", error: err });
+    } else {
+      return res
+        .status(201)
+        .json({ message: "Created succesfull", newRegistro });
+    }
+  });
+};
+
+const deleteRegistro = (req, res) => {
+  console.log(req.params.id);
+  Registro.deleteRegistro(req.params.id, (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Error deleting registro" });
+    } else {
+      if (results.affectedRows > 0) {
+        return res.status(200).json({ message: "Deleted succesfull" });
+      } else {
+        return res.status(500).json({ message: "Error deleting registro" });
+      }
+    }
+  });
 };
 
 module.exports = {
