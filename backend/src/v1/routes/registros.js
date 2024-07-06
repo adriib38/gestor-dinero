@@ -2,9 +2,10 @@ const express = require("express");
 const registrosController = require("../../controllers/registrosController");
 const router = express.Router();
 
-//Registros endpoints
+const verifyToken = require("../../controllers/middlewares/verifyJWT.js");
+
 router
-  .get("/", registrosController.getAllRegistros)
+  .get("/", verifyToken, registrosController.getAllRegistros)
   .get("/:id", registrosController.getRegistroById)
   .get("/c/:categoria", registrosController.getRegistroByCategory)
   .post("/", registrosController.createRegistro)
