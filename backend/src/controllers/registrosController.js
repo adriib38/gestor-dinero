@@ -134,7 +134,7 @@ const deleteRegistro = async (req, res) => {
       }
 
       //User and author are not the same
-      if (registro.userId !== userIdFromToken) {
+      if (registro.user !== userIdFromToken) {
         return res.status(403).json({ message: "You are not authorized to delete this registro" });
       }
 
