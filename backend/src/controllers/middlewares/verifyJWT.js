@@ -5,7 +5,6 @@ require("dotenv").config();
 
 // Middleware to verify the token
 function verifyToken(req, res, next) {
-  console.log('verifyToken')
   let auth = req.get("Authorization");
 
   if (!auth) {

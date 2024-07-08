@@ -11,6 +11,6 @@ router
   .get("/c/:categoria", registrosController.getRegistroByCategory)
   .post("/", verifyToken, registrosController.createRegistro)
   .put("/:id", registrosController.updateRegistro)
-  .delete("/:id", registrosController.deleteRegistro)
+  .delete("/:id", verifyToken, registrosController.deleteRegistro)
 
 module.exports = router;

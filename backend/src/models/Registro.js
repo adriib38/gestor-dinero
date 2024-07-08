@@ -18,7 +18,7 @@ class Registro {
 
   static getRegistroById(id, callback) {
     db.query(`SELECT * FROM registros WHERE id = ?`, [id], (err, results) => {
-      callback(err, results);
+      callback(err, results[0]);
     });
   }
 
@@ -111,6 +111,7 @@ class Registro {
         callback(null, results);
       }
     });
+
   }
 
   static getRegistrosFromUser(userUuid, callback) {

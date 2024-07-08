@@ -120,19 +120,36 @@ const createRegistro = (req, res) => {
   });
 };
 
-const deleteRegistro = (req, res) => {
-  Registro.deleteRegistro(req.params.id, (err, results) => {
-    if (err) {
-      return res.status(500).json({ message: "Error deleting registro" });
-    } else {
-      if (results.affectedRows > 0) {
-        return res.status(200).json({ message: "Deleted succesfull" });
-      } else {
-        return res.status(500).json({ message: "Error deleting registro" });
+const deleteRegistro = async (req, res) => {
+  const { id } = req.params;
+  const userIdFromToken = req.userUuid;
+  try {
+    Registro.getRegistroById(id, (err, registro) => {
+      if (err) {
+        return res.status(500).json({ message: "Error getting registro", error: err });
       }
-    }
-  });
+
+      if (!registro) {
+        return res.status(404).json({ message: "Registro not found" });
+      }
+
+      //User and author are not the same
+      if (registro.userId !== userIdFromToken) {
+        return res.status(403).json({ message: "You are not authorized to delete this registro" });
+      }
+
+      Registro.deleteRegistro(id, (err, result) => {
+        if (err) {
+          return res.status(500).json({ message: "Error deleting registro", error: err });
+        }
+        return res.status(200).json({ message: "Registro deleted successfully" });
+      });
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error", error });
+  }
 };
+
 
 const getRegistrosFromUser = (req, res) => {
   Registro.getRegistrosFromUser(req.userUuid, (err, results) => {
