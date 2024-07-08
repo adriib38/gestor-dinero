@@ -39,6 +39,8 @@ const getRegistroByCategory = (req, res) => {
 
 const updateRegistro = (req, res) => {
   const { body } = req;
+  const { id } = req.params;
+  const userIdFromToken = req.userUuid;
 
   if (
     !body.concepto &&
@@ -73,17 +75,31 @@ const updateRegistro = (req, res) => {
   if (body.cantidad !== undefined) {
     newRegistro.cantidad = body.cantidad;
   }
-
-  Registro.updateRegistro(req.params.id, newRegistro, (err, results) => {
+  
+  Registro.getRegistroById(id, (err, registro) => {
     if (err) {
-      return res
-        .status(500)
-        .json({ message: "Error updating registros", error: err });
-    } else {
-      return res
-        .status(200)
-        .json({ message: "Updated succesfull", newRegistro });
+      return res.status(500).json({ message: "Error getting registro", error: err });
     }
+
+    if (!registro) {
+      return res.status(404).json({ message: "Registro not found" });
+    }
+    
+    if (registro.user !== userIdFromToken) {
+      return res.status(403).json({ message: "You are not authorized to update this registro" });
+    }
+    
+    Registro.updateRegistro(req.params.id, newRegistro, (err, results) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "Error updating registros", error: err });
+      } else {
+        return res
+          .status(200)
+          .json({ message: "Updated succesfull", newRegistro });
+      }
+    });
   });
 };
 
