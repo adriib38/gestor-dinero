@@ -34,10 +34,17 @@ const signup = async (req, res) => {
         expiresIn: "1h",
       });
 
-      return res.status(201).json({
+      return res
+      .status(201)
+      .cookie('access_token', token, {
+        httpOnly: true, //Read cookie only in server (no js)
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 1000 * 60 * 60
+      })
+      .json({
         message: "User created",
         user: user,
-        token: token,
       });
     } else {
       // User already exists
@@ -97,7 +104,15 @@ const signin = async (req, res) => {
         expiresIn: "1h"
       });
 
-      res.status(201).json({ user: results, token: token });
+      res
+      .cookie('access_token', token, {
+        httpOnly: true, //Read cookie only in server (no js)
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 1000 * 60 * 60
+      })
+      .status(201)
+      .json({ user: results });
     } else {
       res.status(401).json({ message: "Invalid password" });
     }

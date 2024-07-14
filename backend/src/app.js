@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const logger = require("morgan");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(express.static(path.join(__dirname, "app")));
 
 // Print request in console
 app.use(logger("tiny"));
+
+app.use(cookieParser());
 
 // Importar y usar las rutas
 app.use("/api/v1", require("./v1/routes/registros"));
