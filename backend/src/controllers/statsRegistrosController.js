@@ -2,7 +2,7 @@ const statsRegistrosService = require('../services/statsRegistrosService');
 
 const getStats = async (req, res) => {
   try {
-    const stats = await statsRegistrosService.getStats();
+    const stats = await statsRegistrosService.getStats(req.userUuid);
     res.send({ status: 'OK', data: stats})
   } catch (e) {
     console.error("Error al obtener stats:", error);
@@ -12,7 +12,7 @@ const getStats = async (req, res) => {
 
 const getCantidadCategoriasGastos= async (req, res) => {
   try {
-    const stats = await statsRegistrosService.getCantidadCategoriasTipo(req, res, 'gasto');
+    const stats = await statsRegistrosService.getCantidadCategoriasTipo(req.userUuid, 'gasto');
     res.send({ status: 'OK', data: stats})
   } catch (e) {
     console.error("Error al obtener stats:", error);
@@ -22,7 +22,7 @@ const getCantidadCategoriasGastos= async (req, res) => {
 
 const getCantidadCategoriasIngresos= async (req, res) => {
   try {
-    const stats = await statsRegistrosService.getCantidadCategoriasTipo(req, res, 'ingreso');
+    const stats = await statsRegistrosService.getCantidadCategoriasTipo(req.userUuid, 'ingreso');
     res.send({ status: 'OK', data: stats})
   } catch (e) {
     console.error("Error al obtener stats:", error);
