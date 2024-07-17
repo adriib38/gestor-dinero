@@ -7,6 +7,7 @@ require("dotenv").config();
 function verifyToken(req, res, next) {
   try {
     let token = req.cookies.access_token
+    console.log('token', token)
     
     if (!token) {
       return res.status(403).json({ message: "No token provided" });

@@ -111,7 +111,7 @@ const signin = async (req, res) => {
         sameSite: 'strict',
         maxAge: 1000 * 60 * 60
       })
-      .status(201)
+      .status(200)
       .json({ user: results });
     } else {
       res.status(401).json({ message: "Invalid password" });

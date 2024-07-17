@@ -8,7 +8,19 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 // Configura CORS
-app.use(cors());
+const allowedOrigins = ['http://localhost:5173'];
+app.use(cors({
+  origin: function(origin, callback){
+
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'El CORS no permite este origen.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true // Permite enviar y recibir cookies
+}));
 
 // Configura body-parser para manejar solicitudes JSON
 app.use(express.json());
