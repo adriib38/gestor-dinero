@@ -20,7 +20,8 @@ const getRegistroById = (req, res) => {
         .status(500)
         .json({ message: "Error getting registro", error: err });
     } else {
-      return res.status(200).json(results[0]);
+      console.log(results)
+      return res.status(200).json(results);
     }
   });
 };
