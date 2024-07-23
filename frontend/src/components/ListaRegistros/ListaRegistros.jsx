@@ -31,7 +31,6 @@ function ListaRegistros() {
     const errors = validateRow(newRow);
 
     if (errors.length === 0) {
-      console.log("Updating row:", newRow);
       const updatedRow = await updateRegistro(newRow);
       return { ...updatedRow, id: newRow.id };
     } else {

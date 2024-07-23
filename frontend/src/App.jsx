@@ -5,7 +5,9 @@ import "./App.css";
 import "./index.css";
 import CrearRegistro from "./components/CrearRegistro/CrearRegistro";
 import { RegistrosContextProvider } from "./context/RegistrosContext";
+import SigninForm from "./components/auth/SigninForm";
 import HeaderApp from "./shared/HeaderApp";
+import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
 
@@ -40,6 +42,15 @@ function App() {
               </RegistrosContextProvider>
             }
           ></Route>
+
+          <Route
+            path="/login"
+            element={
+              <AuthContextProvider>
+                <SigninForm />
+              </AuthContextProvider>
+            }
+            ></Route>
 
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

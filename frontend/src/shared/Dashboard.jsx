@@ -1,43 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useContext } from "react";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
+import { RegistrosContext } from '../context/RegistrosContext';
 import CardChart from "../shared/CardChart/CardChart";
 
 function Dashboard() {
-  const [cantidadCategoriasGastos, setCantidadCategoriasGastos] = useState([]);
-  const [cantidadCategoriasIngresos, setCantidadCategoriasIngresos] = useState([]);
 
-  const getCantidadCategorias = useCallback(async (tipo) => {
-    try {
-      
-      const url = `http://localhost:3000/api/v1/stats/cantidadCategorias${tipo}`;
-      const resp = await fetch(url);
-      if (!resp.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await resp.json();
-      if (data && data.data) {
-        const formattedData = data.data.map((item) => ({
-          id: item.id,
-          value: item.value,
-          label: item.label,
-        }));
-        if (tipo === "gastos") {
-          setCantidadCategoriasGastos(formattedData);
-        } else if (tipo === "ingresos") {
-          setCantidadCategoriasIngresos(formattedData);
-        }
-      } else {
-        console.error("Invalid response format:", data);
-      }
-    } catch (error) {
-      console.error(`Failed to fetch cantidad categorias ${tipo}:`, error);
-    }
-  }, []);
-
-  useEffect(() => {
-    getCantidadCategorias("gastos");
-    getCantidadCategorias("ingresos");
-  }, [getCantidadCategorias]);
+  const { cantidadCategoriasGastos, cantidadCategoriasIngresos } = useContext(RegistrosContext);
 
   const styles = {
     display: "flex",

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useCallback  } from "react";
 import { RegistrosContext } from '../../context/RegistrosContext';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import "./style.css"
@@ -53,7 +53,7 @@ function CrearRegistro() {
       'observaciones': e.target.observaciones.value
     }
     
-    const exito = await crearRegistro(nuevoRegistro)
+    const exito = await crearRegistro(nuevoRegistro);
     if(exito){
       setFormState({
         concepto: "",

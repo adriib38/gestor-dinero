@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import StatsCard from "./StatsCard";
 import Dashboard from "../shared/Dashboard"
-import { getStatsResume as getStatsResumeService } from "../services/Services"
+import { getStatsResume as getStatsResumeService } from "../services/RegistrosService"
+import { RegistrosContextProvider } from '../context/RegistrosContext';
 
 function Inicio() {
   const [statsResume, setStatsResume] = useState([]);
@@ -9,7 +10,7 @@ function Inicio() {
   const getStatsResume = async () => {
     try {
       const resp = await getStatsResumeService();
-      if(resp.status == 'OK') {
+      if(resp.status == 200) {
         setStatsResume(resp.data)
       }
     } catch (error) {
@@ -38,8 +39,10 @@ function Inicio() {
           <StatsCard key={key} title={key} value={value} />
         ))}
       </section>
+      <RegistrosContextProvider>
+        <Dashboard />
+      </RegistrosContextProvider>
 
-      <Dashboard></Dashboard>
     </div>
   );
 }

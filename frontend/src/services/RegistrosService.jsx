@@ -1,14 +1,21 @@
 const API_BASE_URL = `http://localhost:3000/api/v1`
 
-export const getStatsCantidadCategorias = async (type) => {
-    const url = `${API_BASE_URL}/cantidadCategorias${type}`;
+export const getStatsCantidadCategoria = async (type) => {
+    const url = `${API_BASE_URL}/stats/cantidadCategorias${type}`;
     try {
-        const resp = await fetch(url);
+        const resp = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include"
+        });
         if (!resp.ok) {
             throw new Error('Failed to fetch stats');
         }
+
         const data = await resp.json();
-        return data;
+        return { status: resp.status, data: data };
     } catch(error) {
         console.error('Error fetching stats:', error);
         throw error;
@@ -18,12 +25,18 @@ export const getStatsCantidadCategorias = async (type) => {
 export const getStatsResume = async () => {
     const url = `${API_BASE_URL}/stats/resume`;
     try {
-        const resp = await fetch(url);
+        const resp = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+        });
         if (!resp.ok) {
             throw new Error('Failed to fetch stats');
         }
         const data = await resp.json();
-        return data;
+        return { status: resp.status, data };
     } catch(error) {
         console.error('Error fetching stats:', error);
         throw error;
@@ -31,14 +44,20 @@ export const getStatsResume = async () => {
 }
 
 export const getRegistros = async () => {
-    const url = API_BASE_URL
+    const url = `${API_BASE_URL}/misregistros`;
     try {
-        const resp = await fetch(url);
+        const resp = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+        });
         if (!resp.ok) {
             throw new Error('Failed to fetch registros');
         }
         const data = await resp.json();
-        return data;
+        return { status: resp.status, data };
     } catch(error) {
         console.error('Error fetching registros:', error);
         throw error;
@@ -49,13 +68,17 @@ export const deleteRegistro = async (id) => {
     const url = `${API_BASE_URL}/${id}`;
     try {
         const resp = await fetch(url, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
         });
         if (!resp.ok) {
             throw new Error('Failed deleting registro');
         }
         const data = await resp.json();
-        return data;
+        return { status: resp.status, data };
     } catch (error) {
         console.error('Error eliminando registro:', error);
         throw error;
@@ -70,13 +93,14 @@ export const createRegistro = async (nuevoRegistro) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(nuevoRegistro)
+            body: JSON.stringify(nuevoRegistro),
+            credentials: "include",
         })
         if (!resp.ok) {
             throw new Error('Failed deleting registro');
         }
         const data = await resp.json();
-        return data;
+        return { status: resp.status, data };
     } catch (error) {
         console.error('Error creando registro:', error);
         throw error;
@@ -92,13 +116,14 @@ export const updateRegistro = async (nuevoRegistro) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(nuevoRegistro)
+            body: JSON.stringify(nuevoRegistro),
+            credentials: "include",
         })
         if (!resp.ok) {
             throw new Error('Failed put registro');
         }
         const data = await resp.json();
-        return data;
+        return { status: resp.status, data };
     } catch (error) {
         console.error('Error put registro:', error);
         throw error;
