@@ -130,7 +130,7 @@ const user = async (req, res) => {
   let token = req.cookies.access_token
   console.log('token', token)
   
-  if (!token) {
+  if (!token || token == 'none') {
     return res.status(404).json({ message: "User no logged" });
   } else {
     res
