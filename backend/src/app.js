@@ -34,9 +34,9 @@ app.use(logger("tiny"));
 app.use(cookieParser());
 
 // Importar y usar las rutas
+app.use("/api/v1", require("./v1/routes/auth"));
 app.use("/api/v1", require("./v1/routes/registros"));
 app.use("/api/v1/stats", require("./v1/routes/stats"));
-app.use("/api/v1", require("./v1/routes/auth"));
 
 // Error handler para rutas no encontradas
 app.use((req, res, next) => {

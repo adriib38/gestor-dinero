@@ -126,8 +126,22 @@ const signout = async (req, res) => {
     .json({ message: "User logged out successfully" });
 };
 
+const user = async (req, res) => {
+  let token = req.cookies.access_token
+  console.log('token', token)
+  
+  if (!token) {
+    return res.status(404).json({ message: "User no logged" });
+  } else {
+    res
+    .status(200)
+    .json({ message: "User logged" });
+  }
+}
+
 module.exports = {
   signup,
   signin,
-  signout
+  signout,
+  user
 };

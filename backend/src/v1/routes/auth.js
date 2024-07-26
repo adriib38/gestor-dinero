@@ -7,6 +7,7 @@ router
   .post("/signup", authController.signup)
   .post("/signin", authController.signin)
   .post("/signout", authController.signout)
+  .get("/user", authController.user)
 
 
 
