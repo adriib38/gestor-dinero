@@ -18,7 +18,9 @@ function App() {
   return (
     <BrowserRouter>
       <RegistrosContextProvider>
-        <HeaderApp></HeaderApp>
+        <AuthContextProvider>
+          <HeaderApp></HeaderApp>
+        </AuthContextProvider>
       </RegistrosContextProvider>
 
       <div id="content">
