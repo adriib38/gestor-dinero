@@ -12,7 +12,6 @@ function Dashboard() {
     flexWrap: "wrap",
     gap: "30px",
     marginTop: "40px",
-    justifyContent: "center",
   };
 
   const chartConfig = {

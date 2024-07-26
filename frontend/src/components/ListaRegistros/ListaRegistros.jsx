@@ -116,7 +116,7 @@ function ListaRegistros() {
         const isToday = date === today;
 
         const dateStyle = {
-          color: isToday ? "red" : "black",
+          color: isToday ? "#E0274C" : "black",
         };
 
         return <span style={dateStyle}>{date}</span>;

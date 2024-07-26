@@ -27,11 +27,10 @@ function Inicio() {
     flexWrap: "wrap",
     gap: "30px",
     marginTop: "40px",
-    justifyContent: "center",
   };
 
   return (
-    <div style={{ width: '90%' }}>
+    <div style={{ padding: '20px' }}>
       <h1>📈 App gestión de Gastos e ingresos.</h1>
 
       <section style={styles}>

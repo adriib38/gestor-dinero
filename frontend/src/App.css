@@ -14,6 +14,13 @@
     padding: 20px;
 }
 
+.nav-right a,
+.nav-right button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
 #header-navbar ul li {
     display: inline-block;
     margin-right: 30px;
@@ -24,14 +31,23 @@
     color: #fff;
     opacity: .9;
 }
+
 #nav-crear-registro:hover {
     opacity: 1;
 }
 
-#header-navbar a {
-    padding: 10px 20px;
-    border-radius: 6px;
+#nav-logout {
+    border: #E0274C 1px solid;
+    color: #E0274C;
+    background: none;
 }
+
+#nav-login {
+    border: blue 1px solid;
+    color: blue;
+}
+
+
 #header-navbar a:hover {
     background: #dadada8e;
 }
