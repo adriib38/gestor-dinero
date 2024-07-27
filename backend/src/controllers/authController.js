@@ -121,27 +121,29 @@ const signout = async (req, res) => {
     expires: new Date(Date.now() + 5 * 1000),
     httpOnly: true,
   });
-  res
-    .status(200)
-    .json({ message: "User logged out successfully" });
+  res.status(200).json({ message: "User logged out successfully" });
 };
 
-const user = async (req, res) => {
-  let token = req.cookies.access_token
-  console.log('token', token)
-  
-  if (!token || token == 'none') {
-    return res.status(404).json({ message: "User no logged" });
-  } else {
-    res
-    .status(200)
-    .json({ message: "User logged" });
-  }
-}
+const getUserByUuid = async (req, res) => {
+  let uuid = req.userUuid;
+  User.getUserByUuid(uuid, async (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Error getting user", error: err });
+    }
+
+    if (results == undefined) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ user: results });
+  });
+};
 
 module.exports = {
   signup,
   signin,
   signout,
-  user
+  getUserByUuid,
 };

@@ -4,8 +4,6 @@ const router = express.Router();
 
 const verifyToken = require("../../controllers/middlewares/verifyJWT.js");
 
-//Registros endpoints
-
 router
     .get("/resume", verifyToken, statsRegistrosController.getStats)
     .get("/cantidadCategoriasGastos", verifyToken, statsRegistrosController.getCantidadCategoriasGastos)

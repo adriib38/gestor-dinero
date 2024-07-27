@@ -63,6 +63,27 @@ class User {
       }
     );
   }
+
+  static getUserByUuid(uuid, callback) {
+    if (!uuid) {
+      const error = new Error("Missing required fields");
+      console.error("Error getting user:", error);
+      return callback(error, null);
+    }
+
+    db.query(
+      "SELECT username, created_at FROM users WHERE uuid = ?",
+      [uuid],
+      (err, results) => {
+        if (err) {
+          console.error("Error getting user:", err);
+          return callback(err, null);
+        } else {
+          return callback(null, results[0]);
+        }
+      }
+    );
+  }
 }
 
 module.exports = User;
