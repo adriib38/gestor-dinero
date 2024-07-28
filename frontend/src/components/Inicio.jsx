@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import StatsCard from "./StatsCard";
 import Dashboard from "../shared/Dashboard"
 import { getStatsResume as getStatsResumeService } from "../services/RegistrosService"
 import { RegistrosContextProvider } from '../context/RegistrosContext';
+import { AuthContext } from "../context/AuthContext";
 
 function Inicio() {
   const [statsResume, setStatsResume] = useState([]);
-
+  const { userInfo } = useContext(AuthContext);
+  console.log('Logeado: ', userInfo)
+  
   const getStatsResume = async () => {
     try {
       const resp = await getStatsResumeService();
@@ -31,7 +34,7 @@ function Inicio() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>📈 App gestión de Gastos e ingresos.</h1>
+      <h1>Buenos días { userInfo.username }, tu resumen financiero.</h1>
 
       <section style={styles}>
         {Object.entries(statsResume).map(([key, value]) => (

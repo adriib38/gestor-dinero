@@ -18,7 +18,7 @@ export function RegistrosContextProvider(props) {
     const [cantidadCategoriasIngresos, setCantidadCategoriasIngresos] = useState([]);
 
     useEffect(()=> {
-        getStatsCantidadCategoria()
+       
     },[])
 
     const getStatsCantidadCategoria = async (t) => {
