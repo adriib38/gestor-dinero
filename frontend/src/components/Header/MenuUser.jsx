@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 function EntidadLi({children, style, ...rest}) {
@@ -14,6 +14,9 @@ function EntidadLi({children, style, ...rest}) {
 export function MenuUser() {
   const { userInfo, logout, loading } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
+
+  const srcImage = `https://api.dicebear.com/9.x/avataaars/svg?seed=${userInfo.username}`;
+
 
   const imgProfileStyle = {
     borderRadius: "50%",
@@ -52,7 +55,7 @@ export function MenuUser() {
     <div>
       <img 
         id="img-user"
-        onClick={handleClick} style={imgProfileStyle} src={src}></img>
+        onClick={handleClick} style={imgProfileStyle} src={srcImage}></img>
       {open && (
         <ul
           id="user-menu"
