@@ -67,7 +67,6 @@ function CrearRegistro() {
   }
 
   const handleClose = (event, reason) => {
-    console.log('reason', reason)
     //No cerrar Snack cuando se hace clic fuera del Snack
     if (reason === 'clickaway') {
       return;

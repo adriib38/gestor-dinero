@@ -63,7 +63,7 @@ export function AuthContextProvider(props) {
         return { logout: false, message: "Error al cerrar sesión" };
       }
     } catch (error) {
-      console.log({
+      console.error({
         message: `Error al cerrar sesión`,
         type: "error",
         key: Date.now(),

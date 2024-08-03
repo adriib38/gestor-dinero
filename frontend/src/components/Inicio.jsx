@@ -8,7 +8,6 @@ import { AuthContext } from "../context/AuthContext";
 function Inicio() {
   const [statsResume, setStatsResume] = useState([]);
   const { userInfo } = useContext(AuthContext);
-  console.log('Logeado: ', userInfo)
   
   const getStatsResume = async () => {
     try {

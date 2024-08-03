@@ -21,9 +21,9 @@
     cursor: pointer;
 }
 
+
 #header-navbar ul li {
     display: inline-block;
-    margin-right: 30px;
 }
 
 #nav-crear-registro {

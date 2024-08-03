@@ -6,10 +6,10 @@ import "./index.css";
 import CrearRegistro from "./components/CrearRegistro/CrearRegistro";
 import { RegistrosContextProvider } from "./context/RegistrosContext";
 import SigninForm from "./components/auth/SigninForm";
-import HeaderApp from "./shared/HeaderApp";
+import HeaderApp from "./components/Header/HeaderApp";
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./shared/ProtectedRoute";
-import PublicRoute from "./shared/PublicRoute"; // Importa el nuevo componente
+import PublicRoute from "./shared/PublicRoute";
 
 function App() {
 
