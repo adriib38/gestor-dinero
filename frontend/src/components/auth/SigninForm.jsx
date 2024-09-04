@@ -1,13 +1,15 @@
 import { useContext, useState } from "react";
 import { AuthContext } from '../../context/AuthContext';
+import { LinearProgress } from "@mui/material";
 
 function SigninForm() {
   const [msgLogin, setMsgLogin] = useState("");
+  const [ cargando, setCargando] = useState(false);
   const { login } = useContext(AuthContext)
 
   const handlerForm = async (e) =>{
     e.preventDefault();
-
+    setCargando(true)
     const requestLogin = {
       "username": e.target.username.value,
       "password": e.target.password.value
@@ -19,6 +21,7 @@ function SigninForm() {
     } else {
       setMsgLogin("Login successful!");
     }
+    setCargando(false);
   }
  
   return (
@@ -33,6 +36,7 @@ function SigninForm() {
       <input type="password" name="password" id="password" required/>
 
       <button style={{background: '#17769b'}} type="submit">Login</button>
+      {cargando ? <LinearProgress/> : ''}
       <p>{ msgLogin }</p>
     </form>
   );

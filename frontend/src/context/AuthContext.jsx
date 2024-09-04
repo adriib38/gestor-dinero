@@ -12,7 +12,7 @@ export const AuthContext = createContext();
 export function AuthContextProvider(props) {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export function AuthContextProvider(props) {
       if (resp.status === 200) {
         setUserInfo(resp.data.user);
         setIsAuthenticated(true);
-        navigate("/"); // Navegar a la ruta principal
+        navigate("/");
         return { login: true };
       } else if (resp.status === 404) {
         return { login: false, message: "Usuario no encontrado." };
@@ -76,7 +76,6 @@ export function AuthContextProvider(props) {
     setLoading(true);
     try {
       const resp = await checkAuthStatus();
-
       if (resp.status === 200) {
         setIsAuthenticated(true);
         setUserInfo(resp.data.user);
@@ -85,12 +84,14 @@ export function AuthContextProvider(props) {
         setUserInfo({});
       }
     } catch (error) {
-      console.error("Error en userLogged", error);
+      console.error('Error al verificar la sesión del usuario:', error);
       setIsAuthenticated(false);
       setUserInfo({});
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
+  
 
   return (
     <AuthContext.Provider

@@ -46,6 +46,7 @@ export const logout = async () => {
 
 export const user = async () => {
   const url = `${API_BASE_URL}/user`;
+
   try {
     const resp = await fetch(url, {
       method: "GET",
@@ -55,11 +56,20 @@ export const user = async () => {
       credentials: "include",
     });
 
+    if (resp.status == 403) {
+      return { status: resp.status, data: null };
+    }
+
+    if (!resp.ok) {
+      return { status: resp.status, data: null };
+    }
+
     const data = await resp.json();
 
     return { status: resp.status, data };
+
   } catch (error) {
-    console.error("Error fetching stats:", error);
-    throw error;
+    return { status: 500, data: null };
   }
+
 };
