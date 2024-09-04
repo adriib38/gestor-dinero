@@ -15,8 +15,8 @@ function Dashboard() {
   };
 
   const chartConfig = {
-    width: 320,
-    height: 400,
+    width: 450,
+    height: 230,
     sx: {
       [`& .${pieArcLabelClasses.root}`]: {
         fill: "white",
@@ -27,7 +27,7 @@ function Dashboard() {
       legend: {
         direction: 'column',
         position: { vertical: 'middle', horizontal: 'right' },
-        padding: -40,
+        padding: -10
       }
     }
   }
@@ -39,6 +39,8 @@ function Dashboard() {
         title={"Gastos por categoría"}
         chart={
           <PieChart
+     
+
             series={[
               {
                 arcLabel: (item) => `${item.value}€`,
@@ -70,11 +72,14 @@ function Dashboard() {
             slotProps={chartConfig.slotProps}
             colors={chartConfig.colors}
             width={chartConfig.width}
-            height={chartConfig.height}
-            padding={chartConfig.padding}
+            height={chartConfig.height} 
           />
         }
       />
+
+
+
+      
     </section>
   );
 }
