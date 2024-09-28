@@ -2,11 +2,11 @@
     padding: 20px;
     border: 3px solid whitesmoke;
     border-radius: 12px;
-    width: 700px;
 }
 
 .cardChart-header {
     display: flex;
     align-items: center;
     margin-bottom: 40px;
+    gap: 10px
 }

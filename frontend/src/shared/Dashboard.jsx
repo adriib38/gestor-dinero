@@ -2,20 +2,25 @@ import { useContext } from "react";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { RegistrosContext } from '../context/RegistrosContext';
 import CardChart from "../shared/CardChart/CardChart";
+import BarChartMeses from "./CardChart/BarChartMeses";
 
 function Dashboard() {
 
   const { cantidadCategoriasGastos, cantidadCategoriasIngresos } = useContext(RegistrosContext);
 
-  const styles = {
+  const sectionStyle = {
     display: "flex",
+    flexDirection: "column",
     flexWrap: "wrap",
     gap: "30px",
     marginTop: "40px",
   };
 
+  const cardChartStyles = {
+    flex: "1"
+  };
+
   const chartConfig = {
-    width: 450,
     height: 230,
     sx: {
       [`& .${pieArcLabelClasses.root}`]: {
@@ -33,51 +38,56 @@ function Dashboard() {
   }
 
   return (
-    <section style={styles}>
-      <CardChart
-        type={"Gasto"}
-        title={"Gastos por categoría"}
-        chart={
-          <PieChart
-     
+    <section style={sectionStyle}>
+      <div style={{display: "flex", flexDirection: 'row', justifyContent: "space-between"}}>
+        <div style={cardChartStyles}>
+          <CardChart
+            type={"Gasto"}
+            title={"Gastos por categoría"}
+            chart={
+              <PieChart
+                series={[
+                  {
+                    arcLabel: (item) => `${item.value}€`,
+                    data: cantidadCategoriasGastos,
+                  },
+                ]}
+                sx={chartConfig.sx}
+                colors={chartConfig.colors}
+                slotProps={chartConfig.slotProps}
+                width={chartConfig.width}
+                height={chartConfig.height}
+                padding={chartConfig.padding}
+              />
+            }
+          ></CardChart>
+        </div>
 
-            series={[
-              {
-                arcLabel: (item) => `${item.value}€`,
-                data: cantidadCategoriasGastos,
-              },
-            ]}
-            sx={chartConfig.sx}
-            colors={chartConfig.colors}
-            slotProps={chartConfig.slotProps}
-            width={chartConfig.width}
-            height={chartConfig.height}
-            padding={chartConfig.padding}
-          />
-        }
-      />
+        <div style={cardChartStyles}>
+          <CardChart
+            type={"Ingreso"}
+            title={"Ingresos por categoría"}
+            chart={
+              <PieChart
+                series={[
+                  {
+                    arcLabel: (item) => `${item.value}€`,
+                    data: cantidadCategoriasIngresos,
+                  },
+                ]}
+                sx={chartConfig.sx}
+                slotProps={chartConfig.slotProps}
+                colors={chartConfig.colors}
+                width={chartConfig.width}
+                height={chartConfig.height} 
+              />
+            }
+          ></CardChart>
+        </div>
 
-      <CardChart
-        type={"Ingreso"}
-        title={"Ingresos por categoría"}
-        chart={
-          <PieChart
-            series={[
-              {
-                arcLabel: (item) => `${item.value}€`,
-                data: cantidadCategoriasIngresos,
-              },
-            ]}
-            sx={chartConfig.sx}
-            slotProps={chartConfig.slotProps}
-            colors={chartConfig.colors}
-            width={chartConfig.width}
-            height={chartConfig.height} 
-          />
-        }
-      />
+      </div>
 
-
+      <BarChartMeses></BarChartMeses>
 
       
     </section>
