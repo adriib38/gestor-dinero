@@ -2,11 +2,11 @@ const express = require("express");
 const statsRegistrosController = require("../../controllers/statsRegistrosController")
 const router = express.Router();
 
-//Registros endpoints
+const verifyToken = require("../../controllers/middlewares/verifyJWT.js");
 
 router
-    .get("/resume", statsRegistrosController.getStats)
-    .get("/cantidadCategoriasGastos", statsRegistrosController.getCantidadCategoriasGastos)
-    .get("/cantidadCategoriasIngresos", statsRegistrosController.getCantidadCategoriasIngresos)
+    .get("/resume", verifyToken, statsRegistrosController.getStats)
+    .get("/cantidadCategoriasGastos", verifyToken, statsRegistrosController.getCantidadCategoriasGastos)
+    .get("/cantidadCategoriasIngresos", verifyToken, statsRegistrosController.getCantidadCategoriasIngresos)
 
 module.exports = router;

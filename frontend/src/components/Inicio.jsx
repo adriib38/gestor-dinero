@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import StatsCard from "./StatsCard";
 import Dashboard from "../shared/Dashboard"
-import { getStatsResume as getStatsResumeService } from "../services/Services"
+import { getStatsResume as getStatsResumeService } from "../services/RegistrosService"
+import { RegistrosContextProvider } from '../context/RegistrosContext';
+import { AuthContext } from "../context/AuthContext";
+import SkeletonGrid from "../shared/SkeletonGrid";
 
 function Inicio() {
-  const [statsResume, setStatsResume] = useState([]);
-
+  const [statsResume, setStatsResume] = useState(false);
+  const { userInfo } = useContext(AuthContext);
+  
   const getStatsResume = async () => {
     try {
       const resp = await getStatsResumeService();
-      if(resp.status == 'OK') {
+      if(resp.status == 200) {
         setStatsResume(resp.data)
       }
     } catch (error) {
@@ -26,20 +30,28 @@ function Inicio() {
     flexWrap: "wrap",
     gap: "30px",
     marginTop: "40px",
-    justifyContent: "center",
   };
 
   return (
-    <div style={{ width: '90%' }}>
-      <h1>📈 App gestión de Gastos e ingresos.</h1>
+    <div style={{ padding: '20px' }}>
+      <h1>Buenos días { userInfo.username }, tu resumen financiero.</h1>
 
-      <section style={styles}>
-        {Object.entries(statsResume).map(([key, value]) => (
-          <StatsCard key={key} title={key} value={value} />
-        ))}
-      </section>
+      {
+        !statsResume ? (<SkeletonGrid />)
+        :
+        (
+          <section style={styles}>
+            {Object.entries(statsResume).map(([key, value]) => (
+              <StatsCard key={key} title={key} value={value} />
+            ))}
+          </section>
+        )
+      }
 
-      <Dashboard></Dashboard>
+      <RegistrosContextProvider>
+        <Dashboard />
+      </RegistrosContextProvider>
+
     </div>
   );
 }

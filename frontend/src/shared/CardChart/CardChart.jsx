@@ -9,6 +9,7 @@ function CardChart({ title, chart, type }) {
         {type && <RegisterTypeDot t={type} />}  
         <h2>{title}</h2>
       </header>
+  
       {chart}
     </article>
   );

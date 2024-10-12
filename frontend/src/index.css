@@ -1,6 +1,5 @@
 :root {
   font-family: Inter, system-ui;
-  line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light;
@@ -69,12 +68,12 @@ input[type='radio'] {
 
 .feedback.successful {
   background: rgba(5, 172, 55, 0.363);
-  border: 1px solid green;
+  border: 1px solid #27E058;
 }
 
 .feedback.error {
   background: rgba(172, 5, 5, 0.363);
-  border: 1px solid red;
+  border: 1px solid #E0274C;
 }
 
 .feedback button {
