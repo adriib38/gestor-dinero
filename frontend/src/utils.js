@@ -15,4 +15,8 @@ const validatePassword = (password) => {
   return length >= 8 && length <= 15;
 };
 
-export { validateUsername, validatePassword };
+const validateRepeatPassword = (pass, reppass) => {
+  return pass === reppass ? true : false;
+}
+
+export { validateUsername, validatePassword, validateRepeatPassword};
