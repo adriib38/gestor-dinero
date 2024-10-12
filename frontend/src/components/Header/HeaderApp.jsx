@@ -56,14 +56,21 @@ function HeaderApp() {
               </NavLink>
             )}
           </li>
-          <li>
-            {isAuthenticated ?? (
-              <NavLink id="nav-login" to="/login">
-                Login
-              </NavLink>
-            )}
-          </li>
           <li>{isAuthenticated && <MenuUser />}</li>
+          <li>
+          {!isAuthenticated && (
+            <NavLink id="nav-login" to="/login">
+              Login
+            </NavLink>
+          )}
+          </li>
+          <li>
+          {!isAuthenticated && (
+            <NavLink id="nav-register" to="/register">
+              Register
+            </NavLink>
+          )}
+          </li>
         </div>
       </ul>
     </header>
