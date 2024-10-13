@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 // Configura CORS
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['http://localhost:5174'];
 app.use(cors({
   origin: function(origin, callback){
 
@@ -34,6 +34,11 @@ app.use(logger("tiny"));
 app.use(cookieParser());
 
 // Importar y usar las rutas
+app.use("/status", async (req, res) => {
+  return res.status(200).json({
+    message: "Okay :)",
+  });
+})
 app.use("/api/v1", require("./v1/routes/auth"));
 app.use("/api/v1", require("./v1/routes/registros"));
 app.use("/api/v1/stats", require("./v1/routes/stats"));

@@ -10,6 +10,7 @@ import HeaderApp from "./components/Header/HeaderApp";
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./shared/ProtectedRoute";
 import PublicRoute from "./shared/PublicRoute";
+import SignupForm from "./components/auth/SignupForm";
 
 function App() {
 
@@ -53,6 +54,14 @@ function App() {
                 element={
                   <PublicRoute>
                     <SigninForm />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <PublicRoute>
+                    <SignupForm />
                   </PublicRoute>
                 }
               />
