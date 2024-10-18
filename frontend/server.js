@@ -9,7 +9,7 @@ const PORT = 3001;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Servir archivos estáticos desde la carpeta 'dist' (el build de Vite)
+// Servir archivos estáticos desde la carpeta 'dist'
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Redirigir todas las rutas a index.html (para las rutas de React Router)
