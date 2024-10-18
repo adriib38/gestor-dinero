@@ -141,9 +141,25 @@ const getUserByUuid = async (req, res) => {
   });
 };
 
+const deleteUserByUuid = async (req, res) => {
+  let uuid = req.userUuid;
+  User.deleteUserByUuid(uuid, async (err, delet) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Error deleting user", error: err});
+    }
+
+    if (delet) {
+      res.status(200).json({ message: "User delete successful" });
+    }    
+  })
+}
+
 module.exports = {
   signup,
   signin,
   signout,
   getUserByUuid,
+  deleteUserByUuid
 };

@@ -84,6 +84,27 @@ class User {
       }
     );
   }
+
+  static deleteUserByUuid(uuid, callback) {
+    if (!uuid) {
+      const error = new Error("Missing required fields");
+      console.error("Error deleting user:", error);
+      return callback(error, null);
+    }
+
+    db.query(
+      "DELETE from users where uuid = ?",
+      [uuid],
+      (err, delet) => {
+        if (err) {
+          console.error("Error deleting user:", err);
+          return callback(err, null);
+        } else {
+          return callback(null, delet);
+        }
+      }
+    )
+  }
 }
 
 module.exports = User;
