@@ -97,3 +97,33 @@ export const user = async () => {
   }
 
 };
+
+export const deleteUser = async () => {
+  const url = `${API_BASE_URL}/delete`;
+
+  try {
+    const resp = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (resp.status == 403) {
+      return { status: resp.status, data: null };
+    }
+
+    if (!resp.ok) {
+      return { status: resp.status, data: null };
+    }
+
+    const data = await resp.json();
+
+    return { status: resp.status, data };
+
+  } catch (error) {
+    return { status: 500, data: null };
+  }
+
+};

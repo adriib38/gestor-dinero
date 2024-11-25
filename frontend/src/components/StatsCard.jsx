@@ -21,4 +21,4 @@ function StatsCard({title, value}) {
   )
 }
 
-export default StatsCard
+export default StatsCard;
