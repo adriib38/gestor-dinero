@@ -11,6 +11,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./shared/ProtectedRoute";
 import PublicRoute from "./shared/PublicRoute";
 import SignupForm from "./components/auth/SignupForm";
+import UserProfile from "./components/userProfile/UserProfile";
 
 function App() {
 
@@ -63,6 +64,14 @@ function App() {
                   <PublicRoute>
                     <SignupForm />
                   </PublicRoute>
+                }
+              />
+              <Route
+                path="/usr"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
                 }
               />
               <Route path="*" element={<NotFound />} />

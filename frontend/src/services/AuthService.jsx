@@ -1,4 +1,4 @@
-const API_BASE_URL = `http://localhost:3000/api/v1`;
+import { API_BASE_URL } from "../env";
 
 export const register = async (requestRegister) => {
   const url = `${API_BASE_URL}/signup`;
@@ -74,6 +74,36 @@ export const user = async () => {
   try {
     const resp = await fetch(url, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (resp.status == 403) {
+      return { status: resp.status, data: null };
+    }
+
+    if (!resp.ok) {
+      return { status: resp.status, data: null };
+    }
+
+    const data = await resp.json();
+
+    return { status: resp.status, data };
+
+  } catch (error) {
+    return { status: 500, data: null };
+  }
+
+};
+
+export const deleteUser = async () => {
+  const url = `${API_BASE_URL}/delete`;
+
+  try {
+    const resp = await fetch(url, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },

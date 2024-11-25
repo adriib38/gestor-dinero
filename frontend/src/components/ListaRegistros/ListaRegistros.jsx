@@ -1,12 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { RegistrosContext } from "../../context/RegistrosContext";
 import { validateRow } from "../../shared/ValidateRows";
-import RegisterTypeDot from "../../shared/RegisterTypeDot";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Tooltip from "@mui/material/Tooltip";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -16,16 +14,12 @@ function ListaRegistros() {
   const [modeEdit, setModeEdit] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const [loadingData, setLoadingData] = useState(true);
   const { registros, deleteRegistro, updateRegistro, numRegistros } = useContext(RegistrosContext);
-
-  if (registros.length === 0) {
-    return (
-      <h2>
-        No hay registros. <Link to="/new">Crear ahora</Link>
-      </h2>
-    );
-  }
+  
+  useEffect(() => {
+    setLoadingData(registros.length === 0); 
+  }, [registros]); 
 
   const processRowUpdate = async (newRow) => {
     const errors = validateRow(newRow);
@@ -43,11 +37,11 @@ function ListaRegistros() {
     setValidationErrors(errors);
     setOpen(true);
   };
-  
+
   const handleClose = (event, reason) => {
-    console.log('reason', reason)
+    console.log("reason", reason);
     //No cerrar Snack cuando se hace clic fuera del Snack
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -58,10 +52,20 @@ function ListaRegistros() {
     setModeEdit(!modeEdit);
   };
 
-  const rows = registros;
+  const RegisterType = ({ t }) => {
+    // Asignar color basado en el tipo
+    let background = t === 'gasto' ? '#ce1c1cb0' : '#25ce257a';
+    let text = t === 'gasto' ? 'rgb(112, 4, 4)' : 'rgb(8, 129, 8)';
+
+    return (
+      <span style={{ background: background, color: text, fontWeight:500, borderRadius: "10px", padding: "3px 6px" }}>
+        {t}
+      </span>
+    );
+  };
 
   const columns = [
-    { field: "id", headerName: "Id", flex: 1, minWidth: 15 },
+    { field: "id", headerName: "Id", flex: 1, minWidth: 15},
     {
       field: "concepto",
       headerName: "Concepto",
@@ -84,8 +88,7 @@ function ListaRegistros() {
       renderCell: (params) => {
         return (
           <span>
-            <RegisterTypeDot t={params.value} />
-            {params.value}
+            <RegisterType t={params.value} />
           </span>
         );
       },
@@ -144,42 +147,70 @@ function ListaRegistros() {
     },
   ];
 
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    );
+  }
+
+  if (registros.length === 0 && !loadingData) {
+    return (
+      <h2>
+        No hay registros. <Link to="/new">Crear ahora</Link>
+      </h2>
+    );
+  }
+
   return (
     <Box style={{ background: "white" }}>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" variant="filled" sx={{ width: "100%" }}>
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
           {validationErrors}
         </Alert>
       </Snackbar>
 
       <div
         style={{
-          marginBottom: 30,
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 30,
         }}
       >
         <h2>{numRegistros} registros.</h2>
-        <Tooltip
-          title="Edit mode, dos clic en una celda para editar."
-          placement="top"
-        >
-          <button
-            id="btn-mode-edit"
-            className={modeEdit ? "active" : "inactive"}
-            onClick={handleModeEdit}
+        <div style={{ display: "flex", gap: "30px" }}>
+          <Tooltip
+            title="Edit mode, dos clic en una celda para editar."
+            placement="top"
           >
-            <ModeEditIcon />
-          </button>
-        </Tooltip>
+            <Button
+              id="btn-mode-edit"
+              className={modeEdit ? "active" : "inactive"}
+              onClick={handleModeEdit}
+              variant="outlined"
+            >
+              Edit
+            </Button>
+          </Tooltip>
+        </div>
       </div>
       <DataGrid
+        loading={loadingData}
         autoHeight
-        rows={rows}
+        slots={{
+          toolbar: CustomToolbar,
+        }}
+        rows={registros}
         columns={columns}
-        slots={{ toolbar: GridToolbar }}
         localeText={{
-          columnsPanelTextFieldPlaceholder: "Custom Column Title"
+          columnsPanelTextFieldPlaceholder: "Custom Column Title",
         }}
         initialState={{
           pagination: {
@@ -187,7 +218,7 @@ function ListaRegistros() {
           },
           sorting: {
             sortModel: [{ field: "created_at", sort: "desc" }],
-          },
+          }
         }}
         pageSizeOptions={[5, 10]}
         checkboxSelection

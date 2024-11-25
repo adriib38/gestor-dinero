@@ -15,17 +15,6 @@ const chartSetting = {
   },
 };
 
-
-const ButtonChangeYear = {
-  background: '#1976D2',
-  padding: '10px',
-  color: 'white',
-  bordeRadius: '4px',
-  border: 'none',
-  width: '30px',
-  cursor: 'pointer'
-}
-
 const valueFormatter = (cantidad) => `${cantidad}€`;
 
 function BarChartMeses() {

@@ -10,7 +10,7 @@ router
   .post("/signin", authController.signin)
   .post("/signout", authController.signout)
   .get("/user", verifyToken, authController.getUserByUuid)
-
+  .delete("/delete", verifyToken, authController.deleteUserByUuid)
 
 
 module.exports = router;

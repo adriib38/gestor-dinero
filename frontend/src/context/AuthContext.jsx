@@ -131,6 +131,25 @@ export function AuthContextProvider(props) {
     }
   };
   
+  const deleteUser = async () => {
+    try {
+      const resp = await deleteUser();
+
+      if (resp.status === 200) {
+        setIsAuthenticated(false);
+        return { logout: true };
+      } else {
+        return { logout: false, message: "Error al eliminar usuario" };
+      }
+    } catch (error) {
+      console.error({
+        message: `Error al eliminar usuario`,
+        type: "error",
+        key: Date.now(),
+      });
+      return { logout: false, message: "Error en el servidor" };
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -140,6 +159,7 @@ export function AuthContextProvider(props) {
         login,
         logout,
         userInfo,
+        deleteUser,
         loading,
       }}
     >
